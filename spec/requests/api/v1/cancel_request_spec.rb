@@ -55,5 +55,5 @@ RSpec.describe 'update subscription endpoint' do
     expect(body).to have_key(:error)
     expect(body[:error]).to eq("Cannot find subscription without ID")
   end
-end 
+end
 end
