@@ -12,8 +12,25 @@ RSpec.describe 'get all customer subscriptions endpoint' do
       get "/api/v1/customers/#{customer.id}/subscriptions"
 
       index = JSON.parse(response.body, symbolize_names: true)
-      require "pry";binding.pry
+
       expect(index).to have_key(:data)
+      expect(index[:data][:type]).to eq("customers")
+      expect(index[:data][:id]).to eq(customer.id)
+      expect(index[:data][:attributes]).to have_key(:subscriptions)
+      expect(index[:data][:attributes][:subscriptions]).to be_a(Array)
+      expect(index[:data][:attributes][:subscriptions].count).to eq(2)
+      expect(index[:data][:attributes][:subscriptions][0]).to have_key(:title)
+      expect(index[:data][:attributes][:subscriptions][0]).to have_key(:price)
+      expect(index[:data][:attributes][:subscriptions][0]).to have_key(:status)
+      expect(index[:data][:attributes][:subscriptions][0]).to have_key(:frequency)
+      expect(index[:data][:attributes][:subscriptions][0][:status]).to eq("active")
+      expect(index[:data][:attributes][:subscriptions][0][:frequency]).to eq("weekly")
+      expect(index[:data][:attributes][:subscriptions][1]).to have_key(:title)
+      expect(index[:data][:attributes][:subscriptions][1]).to have_key(:price)
+      expect(index[:data][:attributes][:subscriptions][1]).to have_key(:status)
+      expect(index[:data][:attributes][:subscriptions][1]).to have_key(:frequency)
+      expect(index[:data][:attributes][:subscriptions][1][:status]).to eq("cancelled")
+      expect(index[:data][:attributes][:subscriptions][1][:frequency]).to eq("monthly")
     end
   end
 end

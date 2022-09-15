@@ -1,4 +1,9 @@
 class Api::V1::SubscriptionsController < ApplicationController
+  def index
+    customer = Customer.find(params[:customer_id])
+    render json: CustomerSerializer.new(customer)
+  end
+
   def create
     subscription = Subscription.new(subscription_params)
       if subscription.save
@@ -21,8 +26,8 @@ class Api::V1::SubscriptionsController < ApplicationController
           render json: { error: subscription.errors.full_messages.to_sentence }, status: 400
         end
     rescue ActiveRecord::RecordNotFound
-        render json: { error: "Cannot find subscription without ID" }, status: 400
-      end
+      render json: { error: "Cannot find subscription without ID" }, status: 400
+    end
   end
 
     private
