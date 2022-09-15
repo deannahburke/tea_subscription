@@ -1,10 +1,14 @@
 class Api::V1::SubscriptionsController < ApplicationController
   def index
-    customer = Customer.find(params[:customer_id])
-    if customer.subscriptions.empty? == false
-      render json: CustomerSerializer.new(customer)
-    else
-      render json: { message: "This customer has no subscriptions"}
+    begin
+      customer = Customer.find(params[:customer_id])
+      if customer.subscriptions.empty? == false
+        render json: CustomerSerializer.new(customer)
+      else
+        render json: { message: "This customer has no subscriptions"}
+      end
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: "Invalid customer ID" }, status: 400
     end 
   end
 
