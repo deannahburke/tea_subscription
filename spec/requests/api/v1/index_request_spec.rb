@@ -32,5 +32,31 @@ RSpec.describe 'get all customer subscriptions endpoint' do
       expect(index[:data][:attributes][:subscriptions][1][:status]).to eq("cancelled")
       expect(index[:data][:attributes][:subscriptions][1][:frequency]).to eq("monthly")
     end
+
+    it 'will return message if customer has no subscriptions' do
+      customer = Customer.create!(first_name: "Deannah", last_name: "Burke", email: "dmb@gmail.com", address: "123 Bryant Street Denver CO 80211")
+
+      get "/api/v1/customers/#{customer.id}/subscriptions"
+
+      body = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to be_successful
+      expect(response).to have_http_status(200)
+      expect(body).to have_key(:message)
+      expect(body[:message]).to eq("This customer has no subscriptions")
+    end
+  end
+
+  context 'sad path' do
+    it 'will return error if customer id cannot be found' do
+      get "/api/v1/customers/4/subscriptions"
+
+      body = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to_not be_successful
+      expect(response).to have_http_status(400)
+      expect(body).to have_key(:error)
+      expect(body[:error]).to eq("Invalid customer ID")
+    end
   end
 end
