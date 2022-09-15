@@ -9,7 +9,7 @@ class Api::V1::SubscriptionsController < ApplicationController
       end
     rescue ActiveRecord::RecordNotFound
       render json: { error: "Invalid customer ID" }, status: 400
-    end 
+    end
   end
 
   def create

@@ -1,3 +1,7 @@
+Subscription.destroy_all
+Tea.destroy_all
+Customer.destroy_all
+
 customer1 = Customer.create!(first_name: "Deannah", last_name: "Burke", email: "dmb@gmail.com", address: "123 Bryant Street Denver CO 80211")
 customer2 = Customer.create!(first_name: "Casey", last_name: "Pancakes", email: "pancakes@gmail.com", address: "456 Pancake Street Denver CO 80202")
 customer3 = Customer.create!(first_name: "Sai", last_name: "Bean", email: "BeanIsQueen@gmail.com", address: "798 Bean Street Denver CO 80211")
