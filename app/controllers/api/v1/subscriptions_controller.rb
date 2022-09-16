@@ -9,7 +9,7 @@ class Api::V1::SubscriptionsController < ApplicationController
       end
     rescue ActiveRecord::RecordNotFound
       render json: { error: "Invalid customer ID" }, status: 400
-    end 
+    end
   end
 
   def create
@@ -31,7 +31,7 @@ class Api::V1::SubscriptionsController < ApplicationController
           subscription.update(subscription_params)
           render json: SubscriptionSerializer.new(subscription), status: 200
         else
-          render json: { error: subscription.errors.full_messages.to_sentence }, status: 400
+          render json: { error: "Bad request, unable to update" }, status: 400
         end
     rescue ActiveRecord::RecordNotFound
       render json: { error: "Cannot find subscription without ID" }, status: 400

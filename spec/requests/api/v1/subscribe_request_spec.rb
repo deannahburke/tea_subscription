@@ -13,7 +13,7 @@ RSpec.describe 'create subscription endpoint' do
           frequency: 0
         }
       headers = {"CONTENT_TYPE" => "application/json"}
-      post "/api/v1/customers/#{customer.id}/subscribe", headers: headers, params: JSON.generate(subscription_params)
+      post "/api/v1/customers/#{customer.id}/subscriptions", headers: headers, params: JSON.generate(subscription_params)
 
       subscription = JSON.parse(response.body, symbolize_names: true)
 
@@ -47,7 +47,7 @@ RSpec.describe 'create subscription endpoint' do
           frequency: ""
         }
       headers = {"CONTENT_TYPE" => "application/json"}
-      post "/api/v1/customers/#{customer.id}/subscribe", headers: headers, params: JSON.generate(subscription_params)
+      post "/api/v1/customers/#{customer.id}/subscriptions", headers: headers, params: JSON.generate(subscription_params)
 
       body = JSON.parse(response.body, symbolize_names: true)
 
